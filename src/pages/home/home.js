@@ -1,24 +1,52 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import "./home.css";
-import Navbar from "../../components/navbar/navbar";
 import BicicletasDisponibles from "../../components/bicicletasDisponibles/bicicletasDisponibles";
+import axios from "axios";
 
 function Home() {
-	const ITEMS = [
-		{ title: "BICICLETA 1", description: "Modelo 2023" },
-		{ title: "BICICLETA 2", description: "Modelo 2023" },
-		{ title: "BICICLETA 3", description: "Modelo 2023" },
-		{ title: "BICICLETA 4", description: "Modelo 2023" },
-	];
+	const [bicicletas, setBicicletas] = useState(null);
+
+	useEffect(() => {
+		axios
+			.get("bicicletas", {
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token"),
+				},
+			})
+			.then((response) => {
+				console.log(response);
+				setBicicletas(response.data.data);
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}, []);
+
 	return (
-		<div className="main-home">
-			<h1 className="h1-home">BICICLETAS DISPONIBLES</h1>
-			<div className="bicicletas-disp-size">
-				<div className="bicicletas-disp-container">
-					{ITEMS.map((item, index) => {
-						return <BicicletasDisponibles key={index} title={item.title} description={item.description} />;
+		<div className="container">
+			<h1 className="display-5 text-center my-5">BICICLETAS DISPONIBLES</h1>
+			<div className="row">
+				{!bicicletas && (
+					<div class="d-flex justify-content-center">
+						<div class="spinner-border" role="status">
+							<span class="visually-hidden">Loading...</span>
+						</div>
+					</div>
+				)}
+				{bicicletas &&
+					bicicletas.map((bicicleta, index) => {
+						return (
+							<BicicletasDisponibles
+								key={index}
+								alquilada={bicicleta.alquilada}
+								foto_url={bicicleta.foto_url}
+								id={bicicleta.id}
+								marca={bicicleta.marca}
+								modelo={bicicleta.modelo}
+								precio_por_hora={bicicleta.precio_por_hora}
+							/>
+						);
 					})}
-				</div>
 			</div>
 		</div>
 	);

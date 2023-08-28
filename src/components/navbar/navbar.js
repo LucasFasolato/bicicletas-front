@@ -5,8 +5,19 @@ import axios from "axios";
 
 function Navbar({ isLogged, setIsLogged }) {
 	const logout = () => {
-		localStorage.removeItem("token");
-		setIsLogged(false);
+		axios
+			.post("auth/logout", null, {
+				headers: {
+					Authorization: "Bearer " + localStorage.getItem("token"),
+				},
+			})
+			.then((res) => {
+				localStorage.removeItem("token");
+				setIsLogged(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	};
 
 	return (
@@ -30,7 +41,9 @@ function Navbar({ isLogged, setIsLogged }) {
 						<Link to="/perfil">
 							<h3 className="navbar-h3">PERFIL</h3>
 						</Link>
-						<button className="btn btn-light" onClick={logout} />
+						<button className="btn btn-light" onClick={logout}>
+							Salir
+						</button>
 					</>
 				) : (
 					<>
