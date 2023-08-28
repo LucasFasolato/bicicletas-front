@@ -5,7 +5,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-function Register() {
+function Register({ setIsLogged }) {
 	const [email, setEmail] = useState("");
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
@@ -40,6 +40,7 @@ function Register() {
 				console.log(response.data);
 				registroSatisfactorio();
 				localStorage.setItem("token", response.data.access_token);
+				setIsLogged(true);
 				navigate("/");
 			})
 			.catch((error) => {
@@ -55,7 +56,6 @@ function Register() {
 
 	return (
 		<div>
-			<Navbar />
 			<div className="main-register">
 				<h1 className="h1-register">REGISTRO DE USUARIO</h1>
 				<form onSubmit={handleSubmit} className="form-size">

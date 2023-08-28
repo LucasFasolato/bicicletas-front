@@ -12,7 +12,6 @@ function Home() {
 	];
 	return (
 		<div className="main-home">
-			<Navbar />
 			<h1 className="h1-home">BICICLETAS DISPONIBLES</h1>
 			<div className="bicicletas-disp-size">
 				<div className="bicicletas-disp-container">

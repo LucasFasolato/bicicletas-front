@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import Navbar from "../../components/navbar/navbar";
 
-function Login() {
+function Login({ setIsLogged }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [remember, setRemember] = useState(false);
@@ -38,6 +38,7 @@ function Login() {
 			.then((response) => {
 				loginSatisfactorio();
 				localStorage.setItem("token", response.data.access_token);
+				setIsLogged(true);
 				navigate("/");
 			})
 			.catch((error) => {
@@ -53,7 +54,6 @@ function Login() {
 
 	return (
 		<div>
-			<Navbar />
 			<div className="main-login">
 				<h1 className="h1-login text-center">LOGIN</h1>
 				<form onSubmit={handleSubmit} className="form-size">
