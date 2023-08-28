@@ -8,6 +8,7 @@ import Perfil from "./pages/perfil/perfil";
 import Alquileres from "./pages/alquileres/alquileres";
 import Navbar from "./components/navbar/navbar";
 import CheckAuth from "./components/CheckAuth";
+import axios from "axios";
 
 function AppWrapper() {
 	const [isLogged, setIsLogged] = useState(null);
@@ -19,6 +20,17 @@ function AppWrapper() {
 			setIsLogged(false);
 		}
 	}, [isLogged]);
+
+	axios.interceptors.response.use(
+		(response) => response,
+		(error) => {
+			if (error.response?.status === 401) {
+				localStorage.removeItem("token");
+				setIsLogged(false);
+			}
+			return Promise.reject(error);
+		}
+	);
 
 	return (
 		<>
