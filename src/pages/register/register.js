@@ -3,6 +3,7 @@ import "./register.css";
 import Navbar from "../../components/navbar/navbar";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
 	const [email, setEmail] = useState("");
@@ -11,6 +12,8 @@ function Register() {
 	const [confirmPassword, setConfirmPassword] = useState("");
 	const [errores, setErrores] = useState("");
 	const [loading, setLoading] = useState(false);
+
+	const navigate = useNavigate();
 
 	const registroSatisfactorio = () =>
 		toast.success("Registrado correctamente!", {
@@ -36,6 +39,8 @@ function Register() {
 			.then((response) => {
 				console.log(response.data);
 				registroSatisfactorio();
+				localStorage.setItem("token", response.data.access_token);
+				navigate("/");
 			})
 			.catch((error) => {
 				console.log(error.response.data);
