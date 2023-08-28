@@ -8,25 +8,25 @@ import Perfil from "./pages/perfil/perfil";
 import Alquileres from "./pages/alquileres/alquileres";
 
 function AppWrapper() {
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/alquileres" element={<Alquileres />} />
-      <Route path="/perfil" element={<Perfil />} />
-      <Route path="/404" element={<NotFound />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-  );
+	return (
+		<Routes>
+			<Route path="/" element={<Home />} />
+			<Route path="/home" element={<Home />} />
+			<Route path="/login" element={<Login />} />
+			<Route path="/register" element={<Register />} />
+			<Route path="/alquileres" element={<Alquileres />} />
+			<Route path="/perfil" element={<Perfil />} />
+			<Route path="/404" element={<NotFound />} />
+			<Route path="*" element={<NotFound />} />
+		</Routes>
+	);
 }
 
 function App() {
-  return (
-    <Router>
-      <AppWrapper />
-    </Router>
-  );
+	return (
+		<Router>
+			<AppWrapper />
+		</Router>
+	);
 }
 export default App;
