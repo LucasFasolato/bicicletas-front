@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import boostrap from "bootstrap";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 window.axios = axios;
 
@@ -18,6 +20,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<React.StrictMode>
 		<App />
+		<ToastContainer />
 	</React.StrictMode>
 );
 

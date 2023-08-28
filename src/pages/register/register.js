@@ -2,6 +2,7 @@ import { React, useState } from "react";
 import "./register.css";
 import Navbar from "../../components/navbar/navbar";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function Register() {
 	const [email, setEmail] = useState("");
@@ -11,16 +12,30 @@ function Register() {
 	const [errores, setErrores] = useState("");
 	const [loading, setLoading] = useState(false);
 
+	const registroSatisfactorio = () =>
+		toast.success("Registrado correctamente!", {
+			position: "bottom-right",
+			autoClose: 5000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		setLoading(true);
+		setErrores("");
 
 		const data = { name, email, password, password_confirmation: confirmPassword };
 		console.log(data);
 		axios
 			.post("auth/registro", data)
 			.then((response) => {
-				console.log(response);
+				console.log(response.data);
+				registroSatisfactorio();
 			})
 			.catch((error) => {
 				console.log(error.response.data);
@@ -85,8 +100,8 @@ function Register() {
 					</div>
 					<button className="button-form" type="submit" disabled={loading}>
 						{loading ? (
-							<div class="spinner-border" role="status">
-								<span class="visually-hidden">Loading...</span>
+							<div className="spinner-border" role="status">
+								<span className="visually-hidden">Loading...</span>
 							</div>
 						) : (
 							"Registrarse"
